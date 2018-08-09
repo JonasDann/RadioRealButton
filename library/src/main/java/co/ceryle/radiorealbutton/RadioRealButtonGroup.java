@@ -408,6 +408,38 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
             super.addView(child, index, params);
     }
 
+    public void setVisiblity(int index, boolean visible) {
+        if (isInRange(index)) {
+            if (visible) {
+                buttons.get(index).setVisibility(VISIBLE);
+                v_selectors.get(index).setVisibility(VISIBLE);
+            } else {
+                buttons.get(index).setVisibility(GONE);
+                v_selectors.get(index).setVisibility(GONE);
+                if (index == lastPosition) {
+                    buttons.get(lastPosition).setChecked(false);
+                    lastPosition = -1;
+                }
+                int visibleButtonsCount = getVisibleButtons().size();
+                if (index <= initialPosition) {
+                    if (index < initialPosition) {
+                        v_selectors.get(initialPosition).setVisibility(INVISIBLE);
+                    }
+                    initialPosition = Math.max(getAbsoluteIndex(initialPosition), visibleButtonsCount - 1);
+                    v_selectors.get(initialPosition).setVisibility(VISIBLE);
+                }
+                View view = v_selectors.get(initialPosition);
+                float width = buttons.get(initialPosition).getMeasuredWidth() * (visibleButtonsCount + 1) / visibleButtonsCount + dividerSize / visibleButtonsCount;
+                if (lastPosition > -1) {
+                    float position = getRelativeIndex(lastPosition) - getRelativeIndex(initialPosition);
+                    view.setTranslationX(getSelectorTranslationX(width, position));
+                } else {
+                    view.setTranslationX(-width);
+                }
+            }
+        }
+    }
+
     private void createSelectorItem(int position, RadioRealButton button) {
         BackgroundView view = new BackgroundView(getContext());
 
@@ -617,10 +649,33 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         set.start();
     }
 
+    private List<RadioRealButton> getVisibleButtons() {
+        List<RadioRealButton> visibleButtons = new ArrayList<>();
+        for (RadioRealButton button : buttons) {
+            if (button.getVisibility() == VISIBLE) {
+                visibleButtons.add(button);
+            }
+        }
+        return visibleButtons;
+    }
+
+    private int getRelativeIndex(int absolute) {
+        return getVisibleButtons().indexOf(buttons.get(absolute));
+    }
+
+    private int getAbsoluteIndex(int relative) {
+        return buttons.indexOf(getVisibleButtons().get(relative));
+    }
+
+    private float getSelectorTranslationX(float width, float position) {
+        return width * position + dividerSize * position;
+    }
+
     private void animateSelectorSliding(int toPosition, String property, boolean hasAnimation, boolean enableDeselection) {
-        boolean isViewDrawn = buttons.size() > 0 && buttons.get(0).getWidth() > 0;
+        List<RadioRealButton> visibleButtons = getVisibleButtons();
+        boolean isViewDrawn = visibleButtons.size() > 0 && buttons.get(toPosition).getWidth() > 0;
         if (!isViewDrawn) {
-            if (initialPosition != -1)
+            if (initialPosition > 0)
                 v_selectors.get(initialPosition).setVisibility(INVISIBLE);
             v_selectors.get(toPosition).setVisibility(VISIBLE);
             initialPosition = toPosition;
@@ -628,7 +683,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         }
 
         if (initialPosition < 0) {
-            initialPosition = 0;
+            initialPosition = getAbsoluteIndex(0);
 
             View view = v_selectors.get(initialPosition);
             view.setTranslationX(-buttons.get(initialPosition).getMeasuredWidth());
@@ -639,9 +694,9 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
             toPosition = lastPosition > numberOfButtons / 2 ? numberOfButtons : -1;
         }
 
-        float position = toPosition - initialPosition;
+        float position = getRelativeIndex(toPosition) - getRelativeIndex(initialPosition);
 
-        float value = buttons.get(initialPosition).getMeasuredWidth() * position + dividerSize * position;
+        float value = getSelectorTranslationX(buttons.get(initialPosition).getMeasuredWidth(), position);
         ObjectAnimator animator = createAnimator(v_selectors.get(initialPosition), property, value, false, hasAnimation);
         animator.start();
     }
