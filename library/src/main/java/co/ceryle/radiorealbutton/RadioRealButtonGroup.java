@@ -432,8 +432,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
             int visibleButtonsCount = getVisibleButtons().size();
             if (initialPosition > -1) {
                 View view = v_selectors.get(initialPosition);
-                float width = (buttons.get(initialPosition).getMeasuredWidth() * oldVisibleButtonsCount +
-                        dividerSize * (oldVisibleButtonsCount - 1) - dividerSize * (visibleButtonsCount - 1)) /
+                float width = (container.getMeasuredWidth() - dividerSize * (visibleButtonsCount - 1)) /
                         visibleButtonsCount;
                 if (lastPosition > -1) {
                     float position = getRelativeIndex(lastPosition) - getRelativeIndex(initialPosition);
