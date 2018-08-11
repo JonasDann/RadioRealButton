@@ -665,7 +665,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
     }
 
     private int getRelativeIndex(int absolute) {
-        return getVisibleButtons().indexOf(buttons.get(absolute));
+        return absolute == -1 ? -1 : getVisibleButtons().indexOf(buttons.get(absolute));
     }
 
     private int getAbsoluteIndex(int relative) {
