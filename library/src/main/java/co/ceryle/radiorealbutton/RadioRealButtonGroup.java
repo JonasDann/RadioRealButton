@@ -409,10 +409,11 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
     }
 
     public void setVisiblity(int index, boolean visible) {
-        if (isInRange(index)) {
+        if (isInRange(index) && (buttons.get(index).getVisibility() == VISIBLE) != visible) {
+            int oldVisibleButtonsCount = getVisibleButtons().size();
             if (visible) {
                 buttons.get(index).setVisibility(VISIBLE);
-                v_selectors.get(index).setVisibility(VISIBLE);
+                v_selectors.get(index).setVisibility(INVISIBLE);
             } else {
                 buttons.get(index).setVisibility(GONE);
                 v_selectors.get(index).setVisibility(GONE);
@@ -420,16 +421,20 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
                     buttons.get(lastPosition).setChecked(false);
                     lastPosition = -1;
                 }
-                int visibleButtonsCount = getVisibleButtons().size();
-                if (index <= initialPosition) {
-                    if (index < initialPosition) {
-                        v_selectors.get(initialPosition).setVisibility(INVISIBLE);
-                    }
-                    initialPosition = Math.max(getAbsoluteIndex(initialPosition), visibleButtonsCount - 1);
-                    v_selectors.get(initialPosition).setVisibility(VISIBLE);
+            }
+            if (index <= initialPosition) {
+                if (index < initialPosition) {
+                    v_selectors.get(initialPosition).setVisibility(INVISIBLE);
                 }
+                initialPosition = getAbsoluteIndex(0);
+                v_selectors.get(initialPosition).setVisibility(VISIBLE);
+            }
+            int visibleButtonsCount = getVisibleButtons().size();
+            if (initialPosition > -1) {
                 View view = v_selectors.get(initialPosition);
-                float width = buttons.get(initialPosition).getMeasuredWidth() * (visibleButtonsCount + 1) / visibleButtonsCount + dividerSize / visibleButtonsCount;
+                float width = (buttons.get(initialPosition).getMeasuredWidth() * oldVisibleButtonsCount +
+                        dividerSize * (oldVisibleButtonsCount - 1) - dividerSize * (visibleButtonsCount - 1)) /
+                        visibleButtonsCount;
                 if (lastPosition > -1) {
                     float position = getRelativeIndex(lastPosition) - getRelativeIndex(initialPosition);
                     view.setTranslationX(getSelectorTranslationX(width, position));
@@ -668,7 +673,7 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
     }
 
     private float getSelectorTranslationX(float width, float position) {
-        return width * position + dividerSize * position;
+        return (width + dividerSize) * position;
     }
 
     private void animateSelectorSliding(int toPosition, String property, boolean hasAnimation, boolean enableDeselection) {
