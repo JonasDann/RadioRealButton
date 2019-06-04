@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 int position = group1.getPosition();
                 position = ++position % group1.getNumberOfButtons();
                 group1.setPosition(position);
+                group1.getButtons().get(position).setDrawable(R.drawable.b4);
+                group1.getButtons().get(position).setText("");
             }
         });
 

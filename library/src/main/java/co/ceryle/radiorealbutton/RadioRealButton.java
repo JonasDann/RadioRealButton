@@ -525,8 +525,8 @@ public class RadioRealButton extends LinearLayout {
 
     public void setText(String text) {
         this.text = text;
-
         textView.setText(text);
+        textView.setVisibility(text == null || text.isEmpty() ? GONE : VISIBLE);
     }
 
     public void setTextSizePX(int size) {
