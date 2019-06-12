@@ -119,10 +119,10 @@
                 app:rrbg_animateTexts_enterDuration="500"
                 app:rrbg_backgroundColor="@color/white"
                 app:rrbg_bottomLineColor="@color/grey_600"
-                app:rrbg_bottomLineSize="2dp"
+                app:rrbg_bottomLineSize="0dp"
                 app:rrbg_checkedPosition="2"
                 app:rrbg_dividerColor="@color/grey_500"
-                app:rrbg_dividerPadding="10dp"
+                app:rrbg_dividerPadding="0dp"
                 app:rrbg_dividerRadius="0dp"
                 app:rrbg_dividerSize="1dp"
                 app:rrbg_enableDeselection="false"
@@ -135,8 +135,8 @@
                 <co.ceryle.radiorealbutton.RadioRealButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:rrb_drawableHeight="48dp"
-                    app:rrb_drawableWidth="48dp"
+                    app:rrb_drawableHeight="24dp"
+                    app:rrb_drawableWidth="24dp"
                     app:rrb_text="Button 1"
                     app:rrb_textStyle="italic"
                     app:rrb_textTypeface="serif"/>
@@ -144,8 +144,8 @@
                 <co.ceryle.radiorealbutton.RadioRealButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:rrb_drawableHeight="36dp"
-                    app:rrb_drawableWidth="36dp"
+                    app:rrb_drawableHeight="24dp"
+                    app:rrb_drawableWidth="24dp"
                     app:rrb_text="Button 2"
                     app:rrb_textStyle="italic"
                     app:rrb_textTypeface="serif"/>

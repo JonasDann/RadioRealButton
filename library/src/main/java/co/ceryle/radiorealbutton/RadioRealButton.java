@@ -670,14 +670,18 @@ public class RadioRealButton extends LinearLayout {
     }
 
     public void setDrawable(Drawable drawable) {
+        hasDrawable = true;
         imageView.setImageDrawable(drawable);
         imageView.setVisibility(VISIBLE);
+        updatePaddings();
     }
 
     public void setDrawable(int drawable) {
         this.drawable = drawable;
+        hasDrawable = true;
         imageView.setImageResource(drawable);
         imageView.setVisibility(VISIBLE);
+        updatePaddings();
     }
 
     public int getDrawableTint() {
