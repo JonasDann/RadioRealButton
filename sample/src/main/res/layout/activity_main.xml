@@ -130,13 +130,15 @@
                 app:rrbg_selectorAboveOfBottomLine="true"
                 app:rrbg_selectorColor="@color/grey_400"
                 app:rrbg_selectorFullSize="true"
-                app:rrbg_selectorSize="4dp">
+                app:rrbg_selectorSize="4dp"
+                app:rrbg_selectorDividerPadding="0dp">
 
                 <co.ceryle.radiorealbutton.RadioRealButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:rrb_drawableHeight="24dp"
                     app:rrb_drawableWidth="24dp"
+                    app:rrb_drawablePadding="4dp"
                     app:rrb_text="Button 1"
                     app:rrb_textStyle="italic"
                     app:rrb_textTypeface="serif"/>
@@ -146,6 +148,7 @@
                     android:layout_height="wrap_content"
                     app:rrb_drawableHeight="24dp"
                     app:rrb_drawableWidth="24dp"
+                    app:rrb_drawablePadding="4dp"
                     app:rrb_text="Button 2"
                     app:rrb_textStyle="italic"
                     app:rrb_textTypeface="serif"/>
@@ -155,6 +158,7 @@
                     android:layout_height="wrap_content"
                     app:rrb_drawableHeight="24dp"
                     app:rrb_drawableWidth="24dp"
+                    app:rrb_drawablePadding="4dp"
                     app:rrb_text="Button 3"
                     app:rrb_textStyle="italic"
                     app:rrb_textTypeface="serif"/>
