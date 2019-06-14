@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RadioRealButtonGroup group2 = (RadioRealButtonGroup) findViewById(R.id.radioRealButtonGroup_2);
+        group2.setEnabled(false);
         group2.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
             @Override
             public void onClickedButton(RadioRealButton button, int position) {

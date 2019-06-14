@@ -539,6 +539,9 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         RadioRealButton buttonIn = isInRange(position) ? buttons.get(position) : null;
         RadioRealButton buttonOut = isInRange(lastPosition) ? buttons.get(lastPosition) : null;
 
+        if (onClickedButtonListener != null && isToggledByTouch)
+            onClickedButtonListener.onClickedButton(buttonIn, position);
+
         if ((buttonIn == null || !buttonIn.isClickable() || !buttonIn.isEnabled()))
             return;
 
@@ -557,8 +560,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
                 buttonIn.setChecked(true);
         }
 
-        if (null != onClickedButtonListener && isToggledByTouch)
-            onClickedButtonListener.onClickedButton(buttonIn, position);
         if (null != onPositionChangedListener && (lastPosition != position || enableDeselection)) {
             onPositionChangedListener.onPositionChanged(buttonIn, position, lastPosition);
         }
@@ -717,12 +718,6 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
         return animator;
     }
 
-    private void setRippleState(boolean state) {
-        for (RadioRealButton b : buttons) {
-            b.setClickable(state);
-        }
-    }
-
     private void setState() {
         if (hasEnabled)
             setEnabled(enabled);
@@ -742,13 +737,15 @@ public class RadioRealButtonGroup extends RoundedCornerLayout implements RadioRe
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
         setEnabledAlpha(enabled);
-        setRippleState(enabled);
+        for (RadioRealButton b : buttons)
+            b.setEnabled(enabled);
     }
 
     @Override
     public void setClickable(boolean clickable) {
         this.clickable = clickable;
-        setRippleState(clickable);
+        for (RadioRealButton b : buttons)
+            b.setClickable(clickable);
     }
 
     /**

@@ -820,7 +820,7 @@ public class RadioRealButton extends LinearLayout {
 
     @Override
     public void setEnabled(boolean enabled) {
-        super.setClickable(enabled);
+//        super.setClickable(enabled);
         this.enabled = enabled;
         setEnabledAlpha(enabled);
         setRippleBackground(enabled);
